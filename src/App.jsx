@@ -1,19 +1,16 @@
 import Navbar from './navbar/Navbar'
 import Movies from './body/Movies'
 import { useEffect, useState } from 'react'
-import axiosInstance from './network/AxiosConfig'
+import { getAllMovies } from './network/routes/MovieRoutes'
 
 function App() {
   const [movies, setMovies] = useState([])
   const [masterMovies, setMasterMovies] = useState([])
   useEffect(() => {
-    console.log('Use effect launched')
-    axiosInstance.get('get')
-      .then(res => {
-        setMovies(res.data)
-        setMasterMovies(res.data)
-      })
-      .catch(err => console.error(err))
+    getAllMovies(movies => {
+      setMovies(movies)
+      setMasterMovies(movies)
+    }, _ => { })
   }, [])
 
   const onKeywordChange = (keyword) => {
