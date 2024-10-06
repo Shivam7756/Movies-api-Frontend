@@ -2,6 +2,7 @@ import Navbar from './navbar/Navbar'
 import Movies from './body/Movies'
 import { useEffect, useState } from 'react'
 import { getAllMovies } from './network/routes/MovieRoutes'
+import { filterMovies } from './Utils'
 
 function App() {
   const [movies, setMovies] = useState([])
@@ -13,13 +14,14 @@ function App() {
     }, _ => { })
   }, [])
 
+
   const onKeywordChange = (keyword) => {
     console.log(keyword)
     if (keyword.length == 0) {
       setMovies(masterMovies)
       return
     }
-    setMovies(masterMovies.filter(movie => movie.title.toLowerCase().includes(keyword.toLowerCase())))
+    setMovies(filterMovies(masterMovies, keyword))
   }
 
   return (
